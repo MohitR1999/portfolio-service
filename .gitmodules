@@ -1,0 +1,3 @@
+[submodule "portfolio-auth-microservice"]
+	path = portfolio-auth-microservice
+	url = https://github.com/MohitR1999/portfolio-auth-microservice.git

@@ -1,3 +1,6 @@
 [submodule "portfolio-auth-microservice"]
 	path = portfolio-auth-microservice
-	url = https://github.com/MohitR1999/portfolio-auth-microservice.git
+	url = git@github.com:MohitR1999/portfolio-auth-microservice.git
+[submodule "portfolio-blog-microservice"]
+	path = portfolio-blog-microservice
+	url = git@github.com:MohitR1999/portfolio-blog-microservice.git

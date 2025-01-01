@@ -1,0 +1,58 @@
+name: portfolio-blog
+services:
+  auth:
+    build: ./portfolio-auth-microservice
+    ports:
+      - "5000:5000"
+      - "9229:9229"
+    command: npm run dev
+    develop:
+      watch:
+        - action : rebuild
+          path : ./portfolio-auth-microservice/package.json
+
+        - action : sync+restart
+          path : ./portfolio-auth-microservice
+          target : /usr/src/app
+          exec : 
+            command : npm run dev
+    depends_on:
+      - mongo-auth
+  
+  blog:
+    build: ./portfolio-blog-microservice
+    ports:
+      - "5001:5001"
+      - "9230:9230"
+    command: npm run dev
+    develop:
+      watch:
+        - action : rebuild
+          path : ./portfolio-blog-microservice/package.json
+
+        - action : sync+restart
+          path : ./portfolio-blog-microservice
+          target : /usr/src/app
+          exec : 
+            command : npm run dev
+    depends_on:
+      - mongo-blog
+
+  mongo-auth:
+    image: mongo
+    hostname: mongo-auth
+    env_file: "./portfolio-auth-microservice/.env"
+    command: mongod --quiet --logpath /dev/null
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./portfolio-auth-microservice/mongo-seed:/docker-entrypoint-initdb.d/
+
+  mongo-blog:
+    image: mongo
+    env_file: ./portfolio-blog-microservice/.env
+    command: mongod --quiet --logpath /dev/null
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./portfolio-blog-microservice/mongo-seed:/docker-entrypoint-initdb.d/

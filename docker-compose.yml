@@ -38,6 +38,21 @@ services:
     depends_on:
       - mongo-blog
 
+  api-gateway:
+    image: nginx:1.27.3-bookworm
+    depends_on:
+      - auth
+      - blog
+    ports:
+      - "8080:80"
+    develop:
+      watch:
+        - action : sync+exec
+          path : ./nginx.conf
+          target : /etc/nginx/nginx.conf
+          exec:
+            command : nginx -s reload
+
   mongo-auth:
     image: mongo
     hostname: mongo-auth

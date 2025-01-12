@@ -4,3 +4,6 @@
 [submodule "portfolio-blog-microservice"]
 	path = portfolio-blog-microservice
 	url = git@github.com:MohitR1999/portfolio-blog-microservice.git
+[submodule "blog-manager-ui"]
+	path = blog-manager-ui
+	url = git@github.com:MohitR1999/blog-manager-ui.git

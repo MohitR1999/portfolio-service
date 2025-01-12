@@ -1,4 +1,4 @@
-name: portfolio-blog
+name: gyansagar
 services:
   auth:
     build: ./portfolio-auth-microservice
@@ -52,6 +52,26 @@ services:
           target : /etc/nginx/nginx.conf
           exec:
             command : nginx -s reload
+
+  manager-ui:
+    image: node:22-alpine3.20
+    build:
+      context: ./blog-manager-ui
+      dockerfile: Dockerfile
+      target: builder
+    ports:
+      - "3000:3000"
+    develop:
+     watch:
+       - action : rebuild
+         path : ./blog-manager-ui/package.json
+
+       - action : sync
+         path : ./blog-manager-ui
+         target : /usr/src/app
+    depends_on:
+      - auth
+      - blog
 
   mongo-auth:
     image: mongo
